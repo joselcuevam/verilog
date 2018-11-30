@@ -1,3 +1,4 @@
+
 // Code your testbench here
 // or browse Examples
 
@@ -25,8 +26,7 @@ module tb_counter();
     $display("Starting simulation...");
     #90000;
     $display("Ending simulation..."); 
-    $finish;    
-
+    $finish;
  end
   
   //tasks
@@ -50,7 +50,15 @@ module tb_counter();
   // pulses
   reg [15:0] random_val;
   reg        pulses;
-  
+
+
+  initial
+  begin
+    clk = 0;
+    rst = 1;
+    #200;
+    rst = 0;
+  end  
   initial
   begin
     pulses =0; 
