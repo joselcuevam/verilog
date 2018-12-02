@@ -1,5 +1,5 @@
 module timer_registers(
-           input   logic      clk,
+           input  clk,
            rst,
            module_en,
            wr,
@@ -331,7 +331,7 @@ end
 
 //register count
 
-logic [7:0] counter;
+reg [7:0] counter;
 wire [7:0] counter_reg;
 always @(posedge clk or posedge rst)
 begin
