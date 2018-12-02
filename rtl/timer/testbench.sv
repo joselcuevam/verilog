@@ -1,22 +1,21 @@
-
 // Code your testbench here
 // or browse Examples
 
 module tb_counter();
   
   
-  reg  [5:0]  address;
-  reg  [7:0]  write_data;
+  reg [5:0]  address;
+  reg [7:0]  write_data;
   wire [7:0]  read_data;
   reg        module_en;
   reg        write_en;
   reg        rst;
   
-  wire         overflow_int;
-  wire         match0_int;  
-  wire         match1_int;
-  wire         timer_out;
-  wire         clk_ext;
+  wire        overflow_int;
+  wire        match0_int;  
+  wire        match1_int;
+  wire        timer_out;
+  wire        clk_ext;
   wire        trigger;
   
   // Simulator control  
@@ -25,40 +24,36 @@ module tb_counter();
     $dumpfile("dump.vcd"); $dumpvars;
     $display("Starting simulation...");
     #90000;
-    $display("Ending simulation..."); 
-    $finish;
- end
+    $finish;    
+  end
   
   //tasks
- // `include "../TESTBENCH/tasks/register_tasks.sv"
- // `include "../TESTBENCH/tasks/common_tasks.sv"
+  `include "register_tasks.sv"
+  `include "common_tasks.sv"
   
   wire [7:0] reg_read_data;
 
-  assign reg_read_data = read_data;
+  assign reg_read_data = `TB_SCOPE.read_data;
 
   // clock 
   
-  reg        clk;
+  wire        clk;
   wire [11:0] clk_div;
 
-  always
-  begin
-   #5 clk = ~clk;
-  end
+  testcase testcase ();
+  
+  clock_gen #( .PERIOD (20)  )
+  clock_gen (  .out (clk)    );
+      
+  clock_div  clock_div (clk,clk_div);
+  
+  clock_gen #( .PERIOD (200) )
+  clock_gen_ext ( .out (clk_ext) );
 
   // pulses
   reg [15:0] random_val;
   reg        pulses;
-
-
-  initial
-  begin
-    clk = 0;
-    rst = 1;
-    #200;
-    rst = 0;
-  end  
+  
   initial
   begin
     pulses =0; 
