@@ -76,8 +76,8 @@ module clock_gen(
 endmodule
 
 module clock_div(
-  input  logic         in,
-  output logic [11:0]  out
+  input           in,
+  output reg [11:0]  out
   );
 
   initial
@@ -87,7 +87,7 @@ module clock_div(
 
   always @(posedge in)
   begin
-    out++;
+    out = out + 1'b1;
   end
 
 endmodule
